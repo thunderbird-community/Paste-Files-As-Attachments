@@ -4,7 +4,7 @@
   "description": "Attach files as attachments, when copy-pasted into a message compose window.",
   "version": "1",
   "author": "John Bieling",
-  "homepage_url": "https://www.updatestar.com/dl/clipboard/clipboard.html",
+  "homepage_url": "https://github.com/thunderbird-community/Paste-Files-As-Attachments",
   "applications": {
     "gecko": {
       "id": "paste-file-as-attachments@simple.addons",

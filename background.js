@@ -28,3 +28,30 @@ messenger.tabs.query({ type: "messageCompose" }).then(async composeTabs => {
 
 // Load compose script into any new compose window being opened.
 messenger.tabs.onCreated.addListener(prepareComposeTab);
+
+async function getState(tabId, options = {}) {
+    let toggle = options.toggle ?? false;
+
+    let { states } = await browser.storage.session.get({ states: new Map() });
+    let current = states.has(tabId)
+        ? states.get(tabId)
+        : true;
+    if (toggle) {
+        current = !current;
+        states.set(tabId, current);
+        await browser.storage.session.set({ states });
+    }
+    return current;
+}
+
+// The default for each tab is to use the add-ons functionality, but it can be disabled
+browser.composeAction.onClicked.addListener(async (tab, info) => {
+    let status = await getState(tab.id, { toggle: true })
+    browser.composeAction.setBadgeText({ tabId: tab.id, text: status ? "✔️" : "❌" })//✓✖️
+    browser.tabs.sendMessage(tab.id, { setStatus: status })
+})
+
+
+// Defaults
+browser.composeAction.setBadgeBackgroundColor({ color: [0, 0, 0, 0] })
+browser.composeAction.setBadgeText({ text: "✔️"})

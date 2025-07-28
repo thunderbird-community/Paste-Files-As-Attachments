@@ -1,5 +1,6 @@
 document.addEventListener("paste", async event => {
-  if (!event.clipboardData.files.length) {
+  // Abort, iff the clipboardData does not have files or some non-file elements.
+  if (!event.clipboardData.files.length || event.clipboardData.items.length) {
     return;
   }
   event.preventDefault();

@@ -21,12 +21,7 @@
       "background.js"
     ]
   },
-  "compose_action": {
-    "default_area": "formattoolbar",
-    "default_icon": "assets/icon16.png"
-  },
   "permissions": [
-    "compose",
-    "storage"
+    "compose"
   ]
 }

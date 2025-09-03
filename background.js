@@ -3,10 +3,16 @@ async function prepareComposeTab(tab) {
         return;
     }
 
-    await messenger.compose.getComposeDetails(tab.id);
-    await messenger.tabs.executeScript(tab.id, {
-        file: "compose.js"
-    });
+    const { isPlainText } = await messenger.compose.getComposeDetails(tab.id);
+    if (isPlainText) {
+        await messenger.tabs.executeScript(tab.id, {
+            file: "compose_plaintext.js"
+        });
+    } else {
+        await messenger.tabs.executeScript(tab.id, {
+            file: "compose.js"
+        });
+    }
 }
 
 // Listen for messages from the compose script.
